@@ -45,6 +45,13 @@ export async function POST(request: Request) {
   }
   failures.delete(ip);
 
-  if (typeof body.open === "boolean") await writeOpen(body.open);
+  if (typeof body.open === "boolean") {
+    try {
+      await writeOpen(body.open);
+    } catch (e) {
+      console.error(e);
+      return Response.json({ error: "Status storage isn't set up yet (connect Upstash Redis)." }, { status: 503 });
+    }
+  }
   return Response.json({ open: await readOpen() }, { headers: { "Cache-Control": "no-store" } });
 }

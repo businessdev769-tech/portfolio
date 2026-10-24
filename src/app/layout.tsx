@@ -14,7 +14,13 @@ const plexMono = IBM_Plex_Mono({
   weight: ["400", "500"],
 });
 
+// Absolute base for social-preview images: the Vercel production domain when deployed, localhost otherwise.
+const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : "http://localhost:3000";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: `${profile.name} — ${profile.role}`,
   description: profile.summary,
   openGraph: {
