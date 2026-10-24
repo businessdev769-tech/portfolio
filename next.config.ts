@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Let phones reach the dev server through an ngrok tunnel.
+  allowedDevOrigins: ["*.ngrok-free.dev", "*.ngrok-free.app"],
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {
