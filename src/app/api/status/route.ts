@@ -8,7 +8,9 @@ const LOCK_MS = 10 * 60 * 1000;
 const failures = new Map<string, { count: number; until: number }>();
 
 function pinMatches(pin: string) {
-  const expected = process.env.ADMIN_PIN;
+  // Trim both sides: env values pasted into dashboards often pick up stray spaces or newlines.
+  const expected = process.env.ADMIN_PIN?.trim();
+  pin = pin.trim();
   if (!expected) return false;
   // Compare hashes so the comparison is constant-time and length-independent.
   const a = createHash("sha256").update(pin).digest();
